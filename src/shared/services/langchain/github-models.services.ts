@@ -1,6 +1,6 @@
-import { OpenAI } from "openai";
 import "dotenv/config";
 import { GeneratedContent } from "@/types";
+import OpenAI from "openai";
 
 interface ToneGuidelines {
   [key: string]: string[];

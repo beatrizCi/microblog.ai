@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { FormState, ToneOfVoice, GenerateApiRequest } from '@/types';
-import { MICROBLOG_LIMITS } from '@/lib/constants/app';
-import EnhancedTextInput from '../EnhancedTextInput';
-import ToneSelector from '../../components/tone/ToneSelector';
+import { MICROBLOG_LIMITS } from '@/app/lib/constants/app';
+import ToneSelector from '../tone/ToneSelector';
 import CharacterCounter from '../CharacterCounter';
+import EnhancedTextInput from '../EnhancedTextInput';
+
 
 interface GenerationFormProps {
   formData: FormState;
