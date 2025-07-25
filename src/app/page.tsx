@@ -1,102 +1,88 @@
-'use client';
 
-import React, { useCallback } from 'react';
-import { GenerateApiRequest } from '@/types';
-import { useFormValidation } from '@/hooks/useFormValidation';
-import { useContentGeneration } from '@/hooks/useContentGeneration';
-import { useNotification } from '../../hooks/useNotification';
-import { PageHeader } from '../components/generation/PageHeader';
-import { GenerationForm } from '../components/generation/GenerationForm';
-import { PreviewSection } from '../components/generation/PreviewSection';
-import LoadingOverlay from '../components/LoadingOverlay';
-import SuccessNotification from '../components/SuccessNotification';
-import { useShareContent } from '@/hooks/useShareContent';
+import CTAButton from './components/CTAButton';
+import { APP_CONFIG } from './lib/constants/app';
+import { HOMEPAGE_FEATURES } from './lib/data/feature';
 
-export default function GeneratePage() {
-  const {
-    formData,
-    errors,
-    updateField,
-    validateForm,
-  } = useFormValidation();
-
-  const {
-    generatedContent,
-    isLoading,
-    error: generationError,
-    generateContent,
-    clearError
-  } = useContentGeneration();
-
-  const { shareContent } = useShareContent();
-  
-  const {
-    showNotification,
-    notificationMessage,
-    showSuccess,
-    hideNotification
-  } = useNotification();
-
-  const handleFormSubmit = useCallback(async (request: GenerateApiRequest) => {
-    if (!validateForm()) {
-      return;
-    }
-
-    clearError();
-    
-    try {
-      await generateContent(request);
-      showSuccess('Content generated successfully!');
-    } catch (error) {
-    }
-  }, [validateForm, clearError, generateContent, showSuccess]);
-
-  const handleShare = useCallback(async (content: string) => {
-    try {
-      await shareContent(content);
-      showSuccess('Content shared successfully!');
-    } catch (error) {
-      showSuccess('Content copied to clipboard!');
-    }
-  }, [shareContent, showSuccess]);
-
-  React.useEffect(() => {
-    if (generationError) {
-    }
-  }, [generationError]);
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <PageHeader title="Generate Microblog" />
-      
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Form Section */}
-          <div className="relative">
-            <LoadingOverlay isLoading={isLoading} />
-            <GenerationForm
-              formData={formData}
-              errors={errors}
-              isLoading={isLoading}
-              onFieldChange={updateField}
-              onSubmit={handleFormSubmit}
-            />
-          </div>
+    <div className='min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300'>
+      {/* Hero Section */}
+      <HeroSection />
 
-          {/* Preview Section */}
-          <PreviewSection
-            generatedContent={generatedContent}
-            onShare={handleShare}
-          />
-        </div>
-      </main>
+      {/* Features Section */}
+      <FeaturesSection />
 
-      {/* Success Notification */}
-      <SuccessNotification
-        show={showNotification}
-        message={notificationMessage}
-        onClose={hideNotification}
-      />
+      {/* CTA Section */}
+      <CTASection />
     </div>
   );
 }
+
+const HeroSection = () => (
+  <section className='px-4 pt-24 pb-20 mx-auto max-w-7xl sm:px-6 lg:px-8'>
+    <div className='max-w-3xl mx-auto text-center space-y-8'>
+      <h1 className='text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl'>
+        <span className='block bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200'>
+          Smart Microblog
+        </span>
+        <span className='block text-blue-600 dark:text-blue-500'>
+          Generator & Insights
+        </span>
+      </h1>
+      <p className='mx-auto max-w-2xl text-xl text-gray-500 dark:text-gray-300'>
+        {APP_CONFIG.DESCRIPTION}. Maximize your reach with AI-optimized posts powered by GitHub Models.
+      </p>
+      <div className='mt-8'>
+        <CTAButton href='/generate'>Get Started</CTAButton>
+      </div>
+    </div>
+  </section>
+);
+
+const FeaturesSection = () => (
+  <section className='py-16 bg-white dark:bg-gray-800 transition-colors duration-300'>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      <div className='text-center'>
+        <h2 className='text-3xl font-extrabold text-gray-900 dark:text-white'>
+          Powerful Features
+        </h2>
+      </div>
+
+      <div className='grid grid-cols-1 gap-8 md:grid-cols-3 mt-16'>
+        {HOMEPAGE_FEATURES.map((feature, index) => {
+          const IconComponent = feature.icon;
+          
+          return (
+            <div
+              key={index}
+              className={`${feature.bgColor} rounded-2xl p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer`}
+            >
+              <div className='flex items-center gap-4 mb-4'>
+                <div className={`rounded-lg bg-white dark:bg-gray-800 p-3 ${feature.iconColor}`}>
+                  <IconComponent className="w-6 h-6" />
+                </div>
+                <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
+                  {feature.title}
+                </h3>
+              </div>
+              <p className='text-gray-600 dark:text-gray-300'>
+                {feature.description}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+const CTASection = () => (
+  <section className='py-16 bg-gray-50 dark:bg-gray-900'>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center'>
+      <h2 className='text-3xl font-extrabold text-gray-900 dark:text-white mb-8'>
+        Ready to create impactful content?
+      </h2>
+      <CTAButton href='/generate'>Start For Free</CTAButton>
+    </div>
+  </section>
+);

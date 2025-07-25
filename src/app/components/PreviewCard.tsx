@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { GeneratedContent } from '@/types';
-import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
 import { ContentSection } from './preview/ContentSection';
 import { HashtagsDisplay } from './preview/HashtagsDisplay';
 import { InsightsList } from './preview/InsightsList';
 import { ActionButtons } from './preview/ActionButtons';
 import { createFullContent, formatHashtags } from '@/shared/services/langchain/utils/retry/formatting';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 
 interface PreviewCardProps {
   content: GeneratedContent;
