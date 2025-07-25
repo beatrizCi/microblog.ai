@@ -3,7 +3,7 @@
 import React from 'react';
 import { ToneOfVoice } from '@/types';
 import { ToneOption } from './ToneOption';
-import { TONE_OPTIONS } from '@/app/lib/constants/tone';
+import { TONE_OPTIONS } from '@/app/lib/config/tones';
 
 interface ToneSelectorProps {
   value: ToneOfVoice;

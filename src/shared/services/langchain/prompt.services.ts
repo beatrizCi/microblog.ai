@@ -1,4 +1,4 @@
-import { TONE_GUIDELINES } from '@/lib/constants/tones';
+import { TONE_GUIDELINES } from '@/app/lib/config/tones';
 import { ToneOfVoice } from '@/types';
 
 export class PromptService {

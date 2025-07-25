@@ -1,7 +1,7 @@
 'use client';
 
+import { PRO_TIPS } from '@/app/lib/data/feature';
 import React from 'react';
-import { PRO_TIPS } from '@/lib/data/features';
 
 export const ProTips: React.FC = () => {
   return (

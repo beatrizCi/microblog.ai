@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ToneOption as ToneOptionType } from '../../../lib/constants/tones';
+import { ToneOption as ToneOptionType } from  '@/app/lib/config/tones';
+
 
 interface ToneOptionProps {
   option: ToneOptionType;
